@@ -83,48 +83,6 @@ dbAdhere_mars$follow_up_time_adh <- as.numeric(dbAdhere_mars$follow_up_time_adh)
 dbAdhere_mars$MRstart <- dbAdhere_mars$d.MR.1stControl - dbAdhere_mars$DATE_1st
 dbAdhere_mars$MRstart <- as.numeric(dbAdhere_mars$MRstart)
 
-#CMA6
-df_CMA6_episode <- CMA_per_episode(CMA="CMA6",
-                                   data=dbAdhere_mars,
-                                   ID.colname = "IDcode",
-                                   event.date.colname = "DATE",
-                                   event.duration.colname = "DURATION",
-                                   event.daily.dose.colname = "PERDAY",
-                                   medication.class.colname = "CATEGORY",
-                                   carryover.within.obs.window = TRUE,
-                                   carry.only.for.same.medication = TRUE,
-                                   consider.dosage.change = TRUE,
-                                   medication.change.means.new.treatment.episode = FALSE,
-                                   dosage.change.means.new.treatment.episode = FALSE,
-                                   maximum.permissible.gap = 60,
-                                   maximum.permissible.gap.unit = "days",
-                                   followup.window.start = 0,
-                                   followup.window.duration = 365*1.75,
-                                   followup.window.duration.unit = "days",
-                                   observation.window.start = 0,
-                                   observation.window.duration = 365*1.75,
-                                   observation.window.duration.unit = "days",
-                                   event.interval.colname = "event.interval",
-                                   gap.days.colname = "gap.days",
-                                   date.format = "%Y-%m-%d",
-                                   summary = "Base_CMA6")
-
-
-CMA6_episode <- getCMA(df_CMA6_episode)
-mean(CMA6_episode$CMA)
-sd(CMA6_episode$CMA)
-CMA6_episode = CMA6_episode %>% group_by(IDcode) %>% mutate(weighted_CMA = weighted.mean(CMA, episode.duration))
-mean(CMA6_episode$weighted_CMA)
-sd(CMA6_episode$weighted_CMA)
-CMA6_episode = CMA6_episode %>% filter(episode.ID == min(episode.ID))
-mean(CMA6_episode$weighted_CMA)
-sd(CMA6_episode$weighted_CMA)
-sum(CMA6_episode$weighted_CMA>=0.9)
-CMA6_episode_Pts <- CMA6_episode %>% left_join(dfPts_mars2,by="IDcode")
-CMA6_episode_Pts %>% group_by(naive.pts) %>% summarise(mean(weighted_CMA))
-sum(CMA6_episode_Pts$weighted_CMA>=0.9)
-sum(CMA6_episode_Pts$weighted_CMA>=0.85)
-
 #CMA7 criterion validity
 dbAdhere_mars <- dbAdhere_mars[order(dbAdhere_mars$IDcode, dbAdhere_mars$DATE),]
 df_cma7_episodeMR_gap60 <- CMA_per_episode(CMA="CMA7",
@@ -271,12 +229,6 @@ summary(linear2)
 
 model.final_MARS.2 <- step(linear2)
 summary(model.final_MARS.2)
-
-#statistical power
-cohen.ES(test = "r", size = "small")
-r <- pwr.f2.test(u = 3, v = 40, f2 = 0.20, sig.level = 0.05, power = NULL)
-pwr.f2.test(u = 1, v = 40, f2 = 0.71, sig.level = 0.05, power = NULL)
-pwr.f2.test(u = 5, v = 40, f2 = 0.20, sig.level = 0.05, power = NULL)
 
 #correlation CMA and MARS-5
 
