@@ -12,7 +12,9 @@ The 5-item Medication Adherence Report Scale (MARS-5) is a reliable and valid qu
 
 The manuscript resulting from this study is currently under review.
 
-This repository provides the code used to obtain study results. However, due to sensitive patient information **the data used in this study cannot be made publicly available**.
+This repository provides the code used to obtain study results. However, due to sensitive patient information **the data used in this study cannot be made publicly available**. Therefore, data cannot be transmitted to the third party other than researcher who signed the contract on non-disclosure of data. Individual requests for the data can be sent to the NIPH (Metka Zaletel; metka.zaletel@nijz.si).
+
+
 
 ---
 ## Code
