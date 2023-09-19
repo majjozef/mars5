@@ -37,8 +37,8 @@ Please refer to the [Data organization](#data-organization) section in order to 
 
 The data should be organized into two Excel files, e.g.:
 
-- *pts.xlsx*: NEED TO ADD GENERAL DESCRIPTION
-- *rx.xlsx*: NEED TO ADD GENERAL DESCRIPTIONS
+- *pts.xlsx*: descriptive patients database
+- *rx.xlsx*: dimethyl fumarate dispenses
 
 The file *pts.xlsx* should contain the following column names:
 
